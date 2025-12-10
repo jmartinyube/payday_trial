@@ -1,18 +1,20 @@
-import { getProducts } from "../lib/shopify";
-import { Product } from "../types/product";
+// app/page.tsx
+import Link from "next/link";
+import { getProducts } from "@/lib/shopify";
+import { Product } from "@/types/product";
 
-// Helper para obtener la primera imagen de un producto
+// Helper para obtener la primera imagen
 function getProductImage(product: Product) {
   return product.images.edges[0]?.node.url || "/placeholder.png";
 }
 
-export default async function Home() {
+export default async function HomePage() {
   let products: Product[] = [];
 
   try {
     products = await getProducts();
   } catch (e) {
-    console.error(e);
+    console.error("Error al obtener productos:", e);
   }
 
   return (
@@ -20,20 +22,23 @@ export default async function Home() {
       {products.length === 0 && <p>No hay productos o error de conexión.</p>}
 
       {products.map((product: Product) => (
-        <div key={product.id} className="border p-4 rounded-xl shadow">
-          <img
-            src={getProductImage(product)}
-            alt={product.title}
-            className="rounded"
-          />
-          <h2 className="mt-2 text-xl font-bold">{product.title}</h2>
-          <p className="text-gray-600">
-            {product.priceRange.minVariantPrice.amount}{" "}
-            {product.priceRange.minVariantPrice.currencyCode}
-          </p>
-        </div>
+        <Link key={product.id} href={`/product/${product.title.replace(/\s+/g, '-').toLowerCase()}`}>
+          <div className="border p-4 rounded-xl shadow hover:shadow-lg transition cursor-pointer">
+            <img
+              src={getProductImage(product)}
+              alt={product.title}
+              className="rounded mb-4"
+            />
+            <h2 className="text-xl font-bold">{product.title}</h2>
+            <p className="text-gray-600">
+              {product.priceRange.minVariantPrice.amount}{" "}
+              {product.priceRange.minVariantPrice.currencyCode}
+            </p>
+          </div>
+        </Link>
       ))}
     </div>
   );
 }
+
 
