@@ -38,8 +38,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="font-sans">
         <CartProvider>
           <header className="bg-black text-white p-4 flex justify-between items-center">
-            <h1 className="text-xl font-bold">Mi Tienda</h1>
+            {/* Logo */}
+            <Link href="/">
+              <img
+                src="/logo_payday.png"        // Ruta dentro de /public
+                alt="Mi Tienda"
+                className="h-10 w-auto" // Ajusta la altura y mantiene proporción
+              />
+            </Link>
 
+            {/* Navegación */}
             <nav className="flex gap-4 items-center">
               <Link href="/" className="hover:text-gray-400">Inicio</Link>
               <Link href="/productos" className="hover:text-gray-400">Productos</Link>
