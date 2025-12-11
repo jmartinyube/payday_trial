@@ -14,7 +14,6 @@ export async function shopify(query: string, variables: Record<string, any> = {}
   });
 
   const json = await res.json();
-
   if (json.errors) {
     console.error("Shopify API Errors:", json.errors);
     throw new Error("Error desde Shopify API");
@@ -32,20 +31,16 @@ export async function getProducts() {
             id
             title
             images(first: 1) {
-              edges {
-                node { url }
-              }
+              edges { node { url } }
             }
-            priceRange {
-              minVariantPrice { amount currencyCode }
-            }
+            priceRange { minVariantPrice { amount currencyCode } }
           }
         }
       }
     }
   `;
   const data = await shopify(query);
-  return data.products.edges.map((edge: { node: any }) => edge.node);
+  return data.products.edges.map((edge: any) => edge.node);
 }
 
 export async function getProduct(handle: string) {
@@ -57,9 +52,8 @@ export async function getProduct(handle: string) {
         id
         title
         description
-        images(first: 5) {
-          edges { node { url } }
-        }
+        images(first: 5) { edges { node { url } } }
+        variants(first: 1) { edges { node { id } } }
         priceRange { minVariantPrice { amount currencyCode } }
       }
     }
@@ -68,9 +62,11 @@ export async function getProduct(handle: string) {
   const data = await shopify(query, { handle });
 
   if (!data.product) return null;
-
   return data.product;
 }
+
+
+
 
 
 
