@@ -5,24 +5,17 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { CartProvider, useCart } from "./context/CartContext";
 import Link from "next/link";
-import { ShoppingCart } from "lucide-react"; // Icono
+import { ShoppingCart } from "lucide-react";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
+const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 /*export const metadata: Metadata = {
   title: "Mi Tienda",
   description: "Tienda con carrito",
 };*/
 
-// Componente para mostrar el icono con contador
+// Componente que muestra el icono de carrito con número de items
 function CartIcon() {
   const { cart } = useCart();
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
@@ -64,6 +57,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     </html>
   );
 }
+
 
 
 
