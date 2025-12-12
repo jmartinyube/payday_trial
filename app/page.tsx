@@ -1,44 +1,33 @@
 // app/page.tsx
+"use client";
+
 import Link from "next/link";
-import { getProducts } from "@/lib/shopify";
-import { Product } from "@/types/product";
+import { ShoppingCart, Home } from "lucide-react";
 
-// Helper para obtener la primera imagen
-function getProductImage(product: Product) {
-  return product.images.edges[0]?.node.url || "/placeholder.png";
-}
-
-export default async function HomePage() {
-  let products: Product[] = [];
-
-  try {
-    products = await getProducts();
-  } catch (e) {
-    console.error("Error al obtener productos:", e);
-  }
-
+export default function HomePage() {
   return (
-    <div className="p-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-      {products.length === 0 && <p>No hay productos o error de conexión.</p>}
+    <main className="p-8 font-body" style={{ background: "var(--background)", color: "var(--foreground)" }}>
+      <section className="text-center mb-12">
+        <h1 className="text-4xl font-heading font-bold mb-4">Bienvenido a Payday Cards</h1>
+        <p className="text-lg text-[var(--accent-yellow)]">
+          Explora nuestra tienda
+        </p>
+      </section>
 
-      {products.map((product: Product) => (
-        <Link key={product.id} href={`/product/${product.title.replace(/\s+/g, '-').toLowerCase()}`}>
-          <div className="border p-4 rounded-xl shadow hover:shadow-lg transition cursor-pointer">
-            <img
-              src={getProductImage(product)}
-              alt={product.title}
-              className="rounded mb-4"
-            />
-            <h2 className="text-xl font-bold">{product.title}</h2>
-            <p className="text-gray-600">
-              {product.priceRange.minVariantPrice.amount}{" "}
-              {product.priceRange.minVariantPrice.currencyCode}
-            </p>
-          </div>
+      <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-12">
+        <img src="/banner1.png" alt="Banner 1" className="rounded shadow-lg" />
+        <img src="/banner2.png" alt="Banner 2" className="rounded shadow-lg" />
+        <img src="/banner3.png" alt="Banner 3" className="rounded shadow-lg" />
+      </section>
+
+      <div className="text-center">
+        <Link href="/products" className="inline-block bg-[var(--accent-green)] text-[var(--background)] px-6 py-3 rounded-lg font-bold hover:bg-[var(--accent-yellow)] transition">
+          Ver productos
         </Link>
-      ))}
-    </div>
+      </div>
+    </main>
   );
 }
+
 
 

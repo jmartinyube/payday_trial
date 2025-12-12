@@ -7,7 +7,7 @@ export default function CartPage() {
 
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-  if (cart.length === 0) return <p className="p-10">Tu carrito está vacío.</p>;
+  if (cart.length === 0) return <p className="p-10">Tu carrito esta vacio.</p>;
 
   return (
     <div className="p-10 max-w-3xl mx-auto">
@@ -19,7 +19,7 @@ export default function CartPage() {
           <div className="flex-1">
             <h2 className="font-bold">{item.title}</h2>
             <p>
-              {item.price} USD × {item.quantity}
+              {item.price} € × {item.quantity}
             </p>
 
             {/* Controles para cantidad */}
@@ -49,7 +49,7 @@ export default function CartPage() {
         </div>
       ))}
 
-      <h2 className="text-2xl font-bold mt-6">Total: {total.toFixed(2)} USD</h2>
+      <h2 className="text-2xl font-bold mt-6">Total: {total.toFixed(2)} €</h2>
 
       <div className="flex gap-4 mt-4">
         <button onClick={clearCart} className="bg-red-500 text-white px-4 py-2 rounded">
