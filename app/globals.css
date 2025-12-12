@@ -9,6 +9,15 @@
   font-display: swap;
 }
 
+/* Fuente Japanese 3017 desde public/fonts */
+@font-face {
+  font-family: "Japanese 3017";
+  src: url("/fonts/japanese-3017.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Colores base */
 :root {
   --background: #FFF8F0; /* Fondo claro */
@@ -20,8 +29,8 @@
 
 /* Sistema tipográfico */
 @theme inline {
-  --font-family-body: "Osaka", sans-serif;
-  --font-family-heading: "Osaka", sans-serif;
+  --font-family-body: "Japanese 3017", sans-serif;
+  --font-family-heading: "Japanese 3017", sans-serif;
 
   --text-heading-1: 2.5rem;
   --text-heading-2: 2rem;
