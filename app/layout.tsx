@@ -1,24 +1,51 @@
 "use client";
 
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { CartProvider, useCart } from "./context/CartContext";
 import Link from "next/link";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, Home } from "lucide-react";
 
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="es">
+      <body className="font-body">
+        <CartProvider>
+          <header className="bg-black text-white p-4 flex justify-between items-center">
+            {/* IZQUIERDA: Logo */}
+            <Link href="/" className="flex items-center gap-2">
+              <img src="/logo_payday.png" alt="Logo" className="w-10 h-10" />
+            </Link>
 
-/*export const metadata: Metadata = {
-  title: "Mi Tienda",
-  description: "Tienda con carrito",
-};*/
+            {/* CENTRO: Nombre */}
+            <div className="flex-1 text-center">
+              <Link href="/" className="text-xl font-heading font-bold hover:text-gray-400">
+                Payday Cards
+              </Link>
+            </div>
 
-// Componente que muestra el icono de carrito con número de items
+            {/* DERECHA: Home y Carrito */}
+            <div className="flex items-center gap-4">
+              <Link href="/" className="hover:text-gray-400">
+                <Home size={24} />
+              </Link>
+              <CartIcon />
+            </div>
+          </header>
+
+          {children}
+
+          <footer className="bg-black text-white text-center p-4 mt-10 font-body">
+            © 2025 Payday Cards - Todos los derechos reservados
+          </footer>
+        </CartProvider>
+      </body>
+    </html>
+  );
+}
+
 function CartIcon() {
   const { cart } = useCart();
-  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const totalItems = cart.reduce((sum, i) => sum + i.quantity, 0);
 
   return (
     <Link href="/cart" className="relative flex items-center">
@@ -32,39 +59,8 @@ function CartIcon() {
   );
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="es">
-      <body className="font-sans">
-        <CartProvider>
-          <header className="bg-black text-white p-4 flex justify-between items-center">
-            {/* Logo */}
-            <Link href="/">
-              <img
-                src="/logo_payday.png"        // Ruta dentro de /public
-                alt="Mi Tienda"
-                className="h-10 w-auto" // Ajusta la altura y mantiene proporción
-              />
-            </Link>
 
-            {/* Navegación */}
-            <nav className="flex gap-4 items-center">
-              <Link href="/" className="hover:text-gray-400">Inicio</Link>
-              <Link href="/productos" className="hover:text-gray-400">Productos</Link>
-              <CartIcon />
-            </nav>
-          </header>
 
-          {children}
-
-          <footer className="bg-black text-white text-center p-4 mt-10">
-            © 2025 Mi tienda - Todos los derechos reservados
-          </footer>
-        </CartProvider>
-      </body>
-    </html>
-  );
-}
 
 
 
