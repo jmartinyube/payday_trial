@@ -4,12 +4,13 @@ import "./globals.css";
 import { CartProvider, useCart } from "./context/CartContext";
 import Link from "next/link";
 import { ShoppingCart, Home, Package } from "lucide-react";
+import { SiInstagram, SiTiktok, SiX } from "react-icons/si";
 import { useEffect, useState } from "react";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   // Mensajes para el top header
   const messages = [
-    "Envio gratis en compras mayores a 50€",
+    "Envio gratis en compras mayores a 50€", //Sin tilde porque la fuente actual no acepta tildes
     "Nuevas cartas disponibles cada semana",
     "¡Suscribete y obten un 10% de descuento!",
   ];
@@ -27,12 +28,27 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="es">
       <body className="font-body" style={{ background: "var(--background)", color: "var(--foreground)" }}>
         <CartProvider>
-          {/* Top Header: mensajes */}
+
+          {/* Top Header: mensajes con iconos sociales */}
           <div
-            className="w-full text-center py-1 text-sm font-medium"
+            className="w-full relative py-1 text-sm font-medium"
             style={{ background: "var(--foreground)", color: "var(--background)" }}
           >
-            {messages[currentMessage]}
+            {/* Iconos sociales a la izquierda */}
+            <div className="absolute left-6 top-1/2 -translate-y-1/2 flex gap-4 items-center">
+              <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
+                <SiInstagram size={18} color="var(--background)" />
+              </a>
+              <a href="https://www.tiktok.com" target="_blank" rel="noopener noreferrer">
+                <SiTiktok size={18} color="var(--background)" />
+              </a>
+              <a href="https://www.x.com" target="_blank" rel="noopener noreferrer">
+                <SiX size={18} color="var(--background)" />
+              </a>
+            </div>
+
+            {/* Mensaje centrado */}
+            <div className="text-center">{messages[currentMessage]}</div>
           </div>
 
           {/* Main Header */}
@@ -48,17 +64,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
             {/* DERECHA: Iconos */}
             <div className="flex items-center gap-6 text-lg">
-              {/* Icono Home */}
               <Link href="/" title="Inicio" className="hover:text-[var(--accent-red)]">
                 <Home size={28} color="var(--accent-green)" />
               </Link>
 
-              {/* Icono Productos */}
               <Link href="/products" title="Productos" className="hover:text-[var(--accent-red)]">
                 <Package size={28} color="var(--accent-green)" />
               </Link>
 
-              {/* Icono Carrito */}
               <CartIcon />
             </div>
           </header>
@@ -101,6 +114,7 @@ function CartIcon() {
     </Link>
   );
 }
+
 
 
 
