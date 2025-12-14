@@ -9,11 +9,10 @@ import {
   Package,
   Menu,
   X,
-  Sparkles,
-  Dice5,
-  Gem,
   Tags,
 } from "lucide-react";
+import { CgPokemon } from "react-icons/cg";
+import { GiPirateSkull, GiMagicGate} from "react-icons/gi";
 import { SiInstagram, SiTiktok, SiX } from "react-icons/si";
 import { useEffect, useState } from "react";
 
@@ -159,9 +158,9 @@ function SideBar() {
   }, []);
 
   const categories = [
-    { name: "Pokemon", icon: Sparkles },
-    { name: "Yu-Gi-Oh", icon: Dice5 },
-    { name: "Magic", icon: Gem },
+    { name: "Pokemon", icon: CgPokemon },
+    { name: "One Piece", icon: GiPirateSkull},
+    { name: "Magic: The Gathering", icon: GiMagicGate },
     { name: "Ofertas", icon: Tags },
   ];
 
@@ -221,33 +220,3 @@ function SideBar() {
   );
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
-    </html>
-  );
-}*/
