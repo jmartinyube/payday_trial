@@ -150,6 +150,7 @@ function CartIcon() {
 function SideBar() {
   const [hovered, setHovered] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [openCategory, setOpenCategory] = useState<string | null>(null);
 
   useEffect(() => {
     const open = () => setMobileOpen(true);
@@ -158,38 +159,113 @@ function SideBar() {
   }, []);
 
   const categories = [
-    { name: "Pokemon", icon: CgPokemon },
-    { name: "One Piece", icon: GiPirateSkull},
-    { name: "Magic: The Gathering", icon: GiMagicGate },
-    { name: "Ofertas", icon: Tags },
+    {
+      name: "Pokemon",
+      icon: CgPokemon,
+      subs: ["Sobres", "Cajas", "Singles"],
+    },
+    {
+      name: "One Piece",
+      icon: GiPirateSkull,
+      subs: ["Boosters", "Decks"],
+    },
+    {
+      name: "Magic: The Gathering",
+      icon: GiMagicGate,
+      subs: ["Draft", "Commander"],
+    },
+    {
+      name: "Ofertas",
+      icon: Tags,
+      subs: ["Descuentos"],
+    },
   ];
 
   return (
     <>
-      {/* Desktop */}
+      {/* ===== OVERLAY DESKTOP ===== */}
+      {hovered && (
+        <div
+          className="hidden md:block fixed inset-0 z-30"
+          style={{ background: "rgba(0,0,0,0.25)" }}
+        />
+      )}
+
+      {/* ===== DESKTOP SIDEBAR ===== */}
       <aside
-        className="hidden md:flex fixed top-0 left-0 h-full z-40 flex-col"
+        className="hidden md:flex fixed top-0 left-0 h-full z-40 flex-col transition-all duration-300 ease-out"
         style={{
-          width: hovered ? "220px" : "64px",
-          background: "var(--foreground)",
+          width: hovered ? "300px" : "64px",
+          background: hovered
+            ? "rgba(75, 52, 18, 0.95)"
+            : "var(--foreground)",
           color: "var(--background)",
         }}
         onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
+        onMouseLeave={() => {
+          setHovered(false);
+          setOpenCategory(null);
+        }}
       >
-        <div className="h-20 flex items-center justify-center">
-          <Menu />
-        </div>
+        {/* ===== MENU / TODAS LAS CATEGORÍAS ===== */}
+        <Link
+          href="/products"
+          className="flex items-center h-16 transition-colors hover:bg-[rgba(246,201,76,0.12)]"
+        >
+          <div className="w-16 h-16 flex items-center justify-center shrink-0">
+            <Menu size={22} />
+          </div>
 
-        {categories.map(({ name, icon: Icon }) => (
-          <div key={name} className="flex items-center gap-4 px-4 py-3">
-            <Icon size={18} />
-            {hovered && <span>{name}</span>}
+          <span
+            className={`whitespace-nowrap font-semibold text-sm transition-opacity duration-200 ${
+              hovered ? "opacity-100" : "opacity-0 pointer-events-none"
+            }`}
+          >
+            Todas las categorías
+          </span>
+        </Link>
+
+        {/* ===== CATEGORÍAS ===== */}
+        {categories.map(({ name, icon: Icon, subs }) => (
+          <div key={name}>
+            <div
+              className="flex items-center h-16 cursor-pointer transition-colors hover:bg-[rgba(246,201,76,0.12)]"
+              onClick={() =>
+                setOpenCategory(openCategory === name ? null : name)
+              }
+            >
+              <div className="w-16 h-16 flex items-center justify-center shrink-0">
+                <Icon size={20} />
+              </div>
+
+              <span
+                className={`whitespace-nowrap transition-opacity duration-200 ${
+                  hovered ? "opacity-100" : "opacity-0 pointer-events-none"
+                }`}
+              >
+                {name}
+              </span>
+            </div>
+
+            {/* SUBCATEGORÍAS */}
+            {hovered && openCategory === name && (
+              <div className="ml-16 bg-black/10">
+                {subs.map((sub) => (
+                  <Link
+                    key={sub}
+                    href={`/products?category=${sub}`}
+                    className="block px-4 py-2 text-sm hover:text-[var(--accent-green)]"
+                  >
+                    {sub}
+                  </Link>
+                ))}
+              </div>
+            )}
           </div>
         ))}
       </aside>
 
-      {/* Mobile drawer */}
+      {/* ===== MOBILE DRAWER ===== */}
       {mobileOpen && (
         <>
           <div
@@ -208,9 +284,27 @@ function SideBar() {
               <X onClick={() => setMobileOpen(false)} />
             </div>
 
-            {categories.map(({ name, icon: Icon }) => (
-              <div key={name} className="flex items-center gap-4 py-3">
-                <Icon size={18} /> {name}
+            {categories.map(({ name, icon: Icon, subs }) => (
+              <div key={name}>
+                <div
+                  className="flex items-center gap-4 py-3 cursor-pointer hover:bg-black/10"
+                  onClick={() =>
+                    setOpenCategory(openCategory === name ? null : name)
+                  }
+                >
+                  <Icon size={20} />
+                  <span>{name}</span>
+                </div>
+
+                {openCategory === name && (
+                  <div className="ml-8">
+                    {subs.map((sub) => (
+                      <div key={sub} className="py-1 text-sm">
+                        {sub}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             ))}
           </aside>
@@ -219,4 +313,7 @@ function SideBar() {
     </>
   );
 }
+
+
+
 
