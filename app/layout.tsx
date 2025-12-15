@@ -113,7 +113,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             className="text-center p-4 mt-10 text-sm md:pl-16"
             style={{ background: "var(--foreground)", color: "var(--background)" }}
           >
-            © 2025 Payday Cards
+            ©2025 Payday Cards
           </footer>
         </CartProvider>
       </body>
