@@ -224,7 +224,7 @@ function SideBar() {
               hovered ? "opacity-100" : "opacity-0 pointer-events-none"
             }`}
           >
-            Todas las categorías
+            Todas las categorias
           </span>
         </Link>
 
