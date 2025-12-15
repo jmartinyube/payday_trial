@@ -21,7 +21,7 @@ export default async function ProductsPage() {
       {products.length === 0 && <p>No hay productos o error de conexión.</p>}
 
       {products.map((product: Product) => (
-        <Link key={product.id} href={`/product/${product.title.replace(/\s+/g, "-").toLowerCase()}`}>
+        <Link key={product.id} href={`/product/${product.handle}`}>
           <div className="border p-4 rounded-xl shadow hover:shadow-lg transition cursor-pointer">
             <img
               src={getProductImage(product)}

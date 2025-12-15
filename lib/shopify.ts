@@ -30,6 +30,7 @@ export async function getProducts() {
           node {
             id
             title
+            handle
             images(first: 1) {
               edges { node { url } }
             }

@@ -163,11 +163,13 @@ function SideBar() {
     {
       name: "Pokemon",
       icon: CgPokemon,
+      handle: "pokemon",
       subs: ["Sobres", "Cajas", "Singles"],
     },
     {
       name: "One Piece",
       icon: GiPirateSkull,
+      handle: "one-piece",
       subs: ["Boosters", "Decks"],
     },
     {
