@@ -74,7 +74,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               {/* Botón menú móvil */}
               <button
                 className="md:hidden"
-                onClick={() => document.dispatchEvent(new Event("open-menu"))}
+                onClick={() => document.dispatchEvent(new Event("toggle-menu"))}
               >
                 <Menu size={28} />
               </button>
@@ -153,10 +153,11 @@ function SideBar() {
   const [openCategory, setOpenCategory] = useState<string | null>(null);
 
   useEffect(() => {
-    const open = () => setMobileOpen(true);
-    document.addEventListener("open-menu", open);
-    return () => document.removeEventListener("open-menu", open);
+    const toggle = () => setMobileOpen((prev) => !prev);
+    document.addEventListener("toggle-menu", toggle);
+    return () => document.removeEventListener("toggle-menu", toggle);
   }, []);
+
 
   const categories = [
     {
@@ -268,19 +269,20 @@ function SideBar() {
       {/* ===== MOBILE DRAWER ===== */}
       {mobileOpen && (
         <>
-          <div
-            className="fixed inset-0 bg-black/50 z-40"
-            onClick={() => setMobileOpen(false)}
-          />
+      <div
+        className="fixed inset-0 z-40 transition-opacity"
+        style={{ background: "rgba(0,0,0,0.35)" }}
+        onClick={() => setMobileOpen(false)}
+      />
           <aside
-            className="fixed top-0 left-0 h-full w-64 z-50 p-4"
-            style={{
-              background: "var(--foreground)",
-              color: "var(--background)",
-            }}
-          >
+              className="fixed top-0 left-0 h-full w-72 z-50 p-4 transition-transform duration-300"
+              style={{
+                background: "rgba(75, 52, 18, 0.97)",
+                color: "var(--background)",
+              }}
+            >
             <div className="flex justify-between mb-6">
-              <Menu />
+              <Menu onClick={() => setMobileOpen(false)} />
               <X onClick={() => setMobileOpen(false)} />
             </div>
 
